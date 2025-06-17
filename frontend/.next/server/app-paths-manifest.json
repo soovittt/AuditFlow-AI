@@ -1,0 +1,9 @@
+{
+  "/repo/[id]/page": "app/repo/[id]/page.js",
+  "/page": "app/page.js",
+  "/auth/callback/page": "app/auth/callback/page.js",
+  "/team/page": "app/team/page.js",
+  "/analytics/page": "app/analytics/page.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/reports/page": "app/reports/page.js"
+}

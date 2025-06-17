@@ -1,0 +1,327 @@
+[
+    {
+      "id": "maintainability-1",
+      "title": "Avoid Large Functions",
+      "category": "Maintainability",
+      "severity": "medium",
+      "weight": 3,
+      "description": "Functions should not exceed 100 lines of code for readability and maintainability.",
+      "match_tags": ["function", "length", "complexity"],
+      "prompt_template": "Does this function exceed 100 lines of code? If so, should it be refactored into smaller units? Return JSON: { compliant: true|false, rationale: string }.",
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "compliant": { "type": "boolean" },
+          "rationale": { "type": "string" }
+        },
+        "required": ["compliant", "rationale"]
+      }
+    },
+    {
+      "id": "maintainability-2",
+      "title": "Cyclomatic Complexity",
+      "category": "Maintainability",
+      "severity": "high",
+      "weight": 4,
+      "description": "Functions should have a cyclomatic complexity below 10 to reduce risk of bugs.",
+      "match_tags": ["if", "while", "for", "switch", "case", "ternary"],
+      "prompt_template": "Estimate the cyclomatic complexity of this function. Is it under 10? Return JSON: { compliant: true|false, rationale: string }.",
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "compliant": { "type": "boolean" },
+          "rationale": { "type": "string" }
+        },
+        "required": ["compliant", "rationale"]
+      }
+    },
+    {
+      "id": "maintainability-3",
+      "title": "Avoid Deep Nesting",
+      "category": "Maintainability",
+      "severity": "medium",
+      "weight": 3,
+      "description": "Avoid nesting more than 3 levels to keep code flat and readable.",
+      "match_tags": ["if", "for", "while", "indentation"],
+      "prompt_template": "Does this code contain more than 3 levels of nested blocks? If yes, suggest refactoring. Return JSON: { compliant: true|false, rationale: string }.",
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "compliant": { "type": "boolean" },
+          "rationale": { "type": "string" }
+        },
+        "required": ["compliant", "rationale"]
+      }
+    },
+    {
+      "id": "maintainability-4",
+      "title": "Avoid Code Duplication",
+      "category": "Maintainability",
+      "severity": "high",
+      "weight": 4,
+      "description": "Duplicate code should be factored into reusable functions or modules.",
+      "match_tags": ["copy", "duplicate", "similar"],
+      "prompt_template": "Is there duplicated logic that could be extracted into a shared function or module? Return JSON: { compliant: true|false, rationale: string }.",
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "compliant": { "type": "boolean" },
+          "rationale": { "type": "string" }
+        },
+        "required": ["compliant", "rationale"]
+      }
+    },
+    {
+      "id": "maintainability-5",
+      "title": "Limit File Length",
+      "category": "Maintainability",
+      "severity": "low",
+      "weight": 2,
+      "description": "Source files should not exceed 500 lines to stay modular.",
+      "match_tags": ["file", "length", "module"],
+      "prompt_template": "Is this source file longer than 500 lines? If so, consider splitting it. Return JSON: { compliant: true|false, rationale: string }.",
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "compliant": { "type": "boolean" },
+          "rationale": { "type": "string" }
+        },
+        "required": ["compliant", "rationale"]
+      }
+    },
+    {
+      "id": "maintainability-6",
+      "title": "Limit Function Parameters",
+      "category": "Maintainability",
+      "severity": "medium",
+      "weight": 3,
+      "description": "Functions should have no more than 5 parameters to reduce complexity.",
+      "match_tags": ["function", "parameters", "args"],
+      "prompt_template": "Does this function declare more than 5 parameters? Would reducing the parameter count improve maintainability? Return JSON: { compliant: true|false, rationale: string }.",
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "compliant": { "type": "boolean" },
+          "rationale": { "type": "string" }
+        },
+        "required": ["compliant", "rationale"]
+      }
+    },
+    {
+      "id": "readability-1",
+      "title": "Require Docstrings or Comments",
+      "category": "Readability",
+      "severity": "low",
+      "weight": 2,
+      "description": "Public functions and classes should include docstrings or comments explaining their purpose.",
+      "match_tags": ["def", "class", "docstring", "comment"],
+      "prompt_template": "Does this function or class have an appropriate docstring or inline comments? Return JSON: { compliant: true|false, rationale: string }.",
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "compliant": { "type": "boolean" },
+          "rationale": { "type": "string" }
+        },
+        "required": ["compliant", "rationale"]
+      }
+    },
+    {
+      "id": "readability-2",
+      "title": "Descriptive Naming",
+      "category": "Readability",
+      "severity": "medium",
+      "weight": 3,
+      "description": "Variables and functions should have clear, descriptive names.",
+      "match_tags": ["variable", "function", "name"],
+      "prompt_template": "Are the variable and function names in this code clear and descriptive? Return JSON: { compliant: true|false, rationale: string }.",
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "compliant": { "type": "boolean" },
+          "rationale": { "type": "string" }
+        },
+        "required": ["compliant", "rationale"]
+      }
+    },
+    {
+      "id": "readability-3",
+      "title": "Avoid Single-Letter Names",
+      "category": "Readability",
+      "severity": "low",
+      "weight": 2,
+      "description": "Avoid single-letter variable names except for common loop indices (i, j).",
+      "match_tags": ["variable", "name", "loop"],
+      "prompt_template": "Does this code use single-letter variable names outside of loop indices? Return JSON: { compliant: true|false, rationale: string }.",
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "compliant": { "type": "boolean" },
+          "rationale": { "type": "string" }
+        },
+        "required": ["compliant", "rationale"]
+      }
+    },
+    {
+      "id": "readability-4",
+      "title": "Consistent Indentation and Formatting",
+      "category": "Readability",
+      "severity": "low",
+      "weight": 2,
+      "description": "Code should use consistent indentation (e.g., 2 or 4 spaces) and formatting style.",
+      "match_tags": ["indentation", "format", "style"],
+      "prompt_template": "Is the indentation and formatting of this code consistent throughout? Return JSON: { compliant: true|false, rationale: string }.",
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "compliant": { "type": "boolean" },
+          "rationale": { "type": "string" }
+        },
+        "required": ["compliant", "rationale"]
+      }
+    },
+    {
+      "id": "style-1",
+      "title": "Consistent Naming Conventions",
+      "category": "Style",
+      "severity": "low",
+      "weight": 2,
+      "description": "Follow language-specific naming conventions (e.g., snake_case for Python, camelCase for JavaScript).",
+      "match_tags": ["naming", "style", "convention"],
+      "prompt_template": "Does this code adhere to common naming conventions for its language? Return JSON: { compliant: true|false, rationale: string }.",
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "compliant": { "type": "boolean" },
+          "rationale": { "type": "string" }
+        },
+        "required": ["compliant", "rationale"]
+      }
+    },
+    {
+      "id": "style-2",
+      "title": "Line Length Limit",
+      "category": "Style",
+      "severity": "low",
+      "weight": 2,
+      "description": "Lines should not exceed 100 characters for readability.",
+      "match_tags": ["line", "length", "wrap"],
+      "prompt_template": "Are there any lines longer than 100 characters? Return JSON: { compliant: true|false, rationale: string }.",
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "compliant": { "type": "boolean" },
+          "rationale": { "type": "string" }
+        },
+        "required": ["compliant", "rationale"]
+      }
+    },
+    {
+      "id": "style-3",
+      "title": "No Trailing Whitespace",
+      "category": "Style",
+      "severity": "low",
+      "weight": 1,
+      "description": "Remove any trailing spaces at the end of lines.",
+      "match_tags": ["whitespace", "trailing"],
+      "prompt_template": "Does this code contain trailing whitespace on any lines? Return JSON: { compliant: true|false, rationale: string }.",
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "compliant": { "type": "boolean" },
+          "rationale": { "type": "string" }
+        },
+        "required": ["compliant", "rationale"]
+      }
+    },
+    {
+      "id": "style-4",
+      "title": "Linter Compliance",
+      "category": "Style",
+      "severity": "medium",
+      "weight": 3,
+      "description": "Code should pass linting with no errors or warnings.",
+      "match_tags": ["lint", "eslint", "flake8", "pylint"],
+      "prompt_template": "Assuming standard lint rules for this language, does this code have any lint errors or warnings? Return JSON: { compliant: true|false, rationale: string }.",
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "compliant": { "type": "boolean" },
+          "rationale": { "type": "string" }
+        },
+        "required": ["compliant", "rationale"]
+      }
+    },
+    {
+      "id": "testing-1",
+      "title": "Test Coverage for New Code",
+      "category": "Testing",
+      "severity": "high",
+      "weight": 4,
+      "description": "New or modified functions should have at least one corresponding test case.",
+      "match_tags": ["test", "spec", "it", "describe"],
+      "prompt_template": "For this function or module, is there at least one test case exercising it? Return JSON: { compliant: true|false, rationale: string }.",
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "compliant": { "type": "boolean" },
+          "rationale": { "type": "string" }
+        },
+        "required": ["compliant", "rationale"]
+      }
+    },
+    {
+      "id": "testing-2",
+      "title": "Test Naming Conventions",
+      "category": "Testing",
+      "severity": "low",
+      "weight": 2,
+      "description": "Test files and functions should follow naming conventions (e.g., `test_*` for pytest).",
+      "match_tags": ["test", "spec", "naming"],
+      "prompt_template": "Do the test files and functions follow the expected naming conventions? Return JSON: { compliant: true|false, rationale: string }.",
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "compliant": { "type": "boolean" },
+          "rationale": { "type": "string" }
+        },
+        "required": ["compliant", "rationale"]
+      }
+    },
+    {
+      "id": "performance-1",
+      "title": "Avoid Expensive Operations in Loops",
+      "category": "Performance",
+      "severity": "medium",
+      "weight": 3,
+      "description": "Ensure no heavy computations, I/O, or allocations occur inside tight loops.",
+      "match_tags": ["for", "while", "loop", "expensive"],
+      "prompt_template": "Does this loop perform expensive operations (e.g., DB calls, file I/O, large allocations)? Return JSON: { compliant: true|false, rationale: string }.",
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "compliant": { "type": "boolean" },
+          "rationale": { "type": "string" }
+        },
+        "required": ["compliant", "rationale"]
+      }
+    },
+    {
+      "id": "performance-2",
+      "title": "Use Efficient Data Structures",
+      "category": "Performance",
+      "severity": "low",
+      "weight": 2,
+      "description": "Prefer appropriate data structures (e.g., sets for membership tests, dicts for lookups).",
+      "match_tags": ["list", "set", "dict", "array", "lookup"],
+      "prompt_template": "Is there a more efficient data structure than the one used here for the intended operations? Return JSON: { compliant: true|false, rationale: string }.",
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "compliant": { "type": "boolean" },
+          "rationale": { "type": "string" }
+        },
+        "required": ["compliant", "rationale"]
+      }
+    }
+  ]
+  
