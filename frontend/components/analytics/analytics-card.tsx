@@ -10,11 +10,11 @@ interface AnalyticsCardProps {
   change: string
   trend: "up" | "down"
   icon: LucideIcon
-  color: "emerald" | "amber" | "blue" | "purple"
+  color: string
 }
 
 export function AnalyticsCard({ title, value, change, trend, icon: Icon, color }: AnalyticsCardProps) {
-  const colorClasses = {
+  const colorClasses: { [key: string]: string } = {
     emerald: "from-emerald-500/10 to-emerald-600/5 text-emerald-400",
     amber: "from-amber-500/10 to-amber-600/5 text-amber-400",
     blue: "from-blue-500/10 to-blue-600/5 text-blue-400",
@@ -26,11 +26,11 @@ export function AnalyticsCard({ title, value, change, trend, icon: Icon, color }
 
   return (
     <Card
-      className={`bg-gradient-to-br ${colorClasses[color]} backdrop-blur-sm border-white/10 hover:border-white/20 transition-all duration-200`}
+      className={`bg-gradient-to-br ${colorClasses[color] || 'from-gray-500/10 to-gray-600/5 text-gray-400'} backdrop-blur-sm border-white/10 hover:border-white/20 transition-all duration-200`}
     >
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
         <CardTitle className="text-sm font-medium text-gray-300">{title}</CardTitle>
-        <Icon className={`h-5 w-5 ${colorClasses[color].split(" ")[2]}`} />
+        <Icon className={`h-5 w-5 ${(colorClasses[color] || 'text-gray-400').split(" ")[2]}`} />
       </CardHeader>
       <CardContent className="space-y-2">
         <div className="text-3xl font-bold text-white">{value}</div>

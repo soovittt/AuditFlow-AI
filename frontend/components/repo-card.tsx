@@ -5,10 +5,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ScoreGauge } from "@/components/score-gauge"
-import { Eye, Play, GitBranch, Calendar, AlertTriangle } from "lucide-react"
+import { Eye, Play, GitBranch, Calendar, AlertTriangle, Loader2 } from "lucide-react"
 import type { Repo } from "@/lib/types"
 import { useState } from "react"
 import { getToken } from "@/lib/auth"
+import { BACKEND_BASE_URL } from "@/lib/config"
 
 interface RepoCardProps {
   repo: Repo
@@ -25,7 +26,7 @@ export function RepoCard({ repo, variant = "grid" }: RepoCardProps) {
     const token = getToken()
     try {
       console.log(`Scan requested for repo: ${repo.id} (${repo.name})`)
-      await fetch(`http://localhost:8080/api/repos/${repo.id}/scan`, {
+      await fetch(`${BACKEND_BASE_URL}/api/repos/${repo.id}/scan`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
       })
@@ -119,7 +120,7 @@ export function RepoCard({ repo, variant = "grid" }: RepoCardProps) {
                 disabled={isScanning}
               >
                 {isScanning ? (
-                  <span className="flex items-center"><span className="loader mr-2" />Scanning…</span>
+                  <span className="flex items-center"><Loader2 className="mr-2 h-4 w-4 animate-spin" />Scanning…</span>
                 ) : (
                   <><Play className="mr-2 h-4 w-4" />Scan Now</>
                 )}
@@ -182,7 +183,7 @@ export function RepoCard({ repo, variant = "grid" }: RepoCardProps) {
             disabled={isScanning}
           >
             {isScanning ? (
-              <span className="flex items-center"><span className="loader mr-2" />Scanning…</span>
+              <span className="flex items-center"><Loader2 className="mr-2 h-4 w-4 animate-spin" />Scanning…</span>
             ) : (
               <><Play className="mr-2 h-4 w-4" />Scan</>
             )}

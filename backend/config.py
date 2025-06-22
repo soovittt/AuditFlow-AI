@@ -36,4 +36,7 @@ class Settings:
     OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY", "")
     OPENAI_EMBEDDING_MODEL: str = os.getenv("OPENAI_EMBEDDING_MODEL", "text-embedding-ada-002")
 
+    # Cloud Run Worker URL
+    CLOUD_RUN_WORKER_URL: str = os.getenv("CLOUD_RUN_WORKER_URL", "https://audit-flow-1061681908568.us-west2.run.app") # Production Cloud Run URL
+
 settings = Settings()

@@ -25,6 +25,7 @@ import {
   Loader2,
 } from "lucide-react"
 import Link from "next/link"
+import { BACKEND_BASE_URL } from "@/lib/config"
 
 export default function AuditFlowLanding() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -44,7 +45,7 @@ export default function AuditFlowLanding() {
   const handleGitLabConnect = async () => {
     setIsConnecting(true)
     try {
-      const res = await fetch("http://localhost:8080/api/auth/gitlab/login")
+      const res = await fetch(`${BACKEND_BASE_URL}/api/auth/gitlab/login`)
       const data = await res.json()
       if (data.url) {
         window.location.href = data.url

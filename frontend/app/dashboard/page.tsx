@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Plus, Search, Filter, Grid3X3, List } from "lucide-react"
 import { getToken, refreshToken } from "@/lib/auth"
+import { BACKEND_BASE_URL } from "@/lib/config"
 
 export default function DashboardPage() {
   const [repos, setRepos] = useState<any[]>([])
@@ -17,17 +18,16 @@ export default function DashboardPage() {
   useEffect(() => {
     const fetchRepos = async () => {
       let token = getToken()
-      console.log('JWT token used for /api/repos:', token)
       if (!token) return
       try {
-        let res = await fetch("http://localhost:8080/api/repos", {
+        let res = await fetch(`${BACKEND_BASE_URL}/api/repos/`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         if (res.status === 401) {
           // Try to refresh the token
           token = await refreshToken()
           if (token) {
-            res = await fetch("http://localhost:8080/api/repos", {
+            res = await fetch(`${BACKEND_BASE_URL}/api/repos/`, {
               headers: { Authorization: `Bearer ${token}` },
             })
           }

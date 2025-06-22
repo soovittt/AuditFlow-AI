@@ -1,4 +1,5 @@
 import Cookies from "js-cookie"
+import { BACKEND_BASE_URL } from "@/lib/config"
 
 const TOKEN_KEY = "cs_jwt_token"
 
@@ -26,7 +27,7 @@ export function removeToken() {
 
 export async function refreshToken(): Promise<string | undefined> {
   try {
-    const res = await fetch("http://localhost:8080/api/auth/refresh", {
+    const res = await fetch(`${BACKEND_BASE_URL}/api/auth/refresh`, {
       method: "POST",
       credentials: "include", // send cookies
     })

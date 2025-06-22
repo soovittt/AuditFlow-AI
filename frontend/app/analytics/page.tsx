@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { DashboardLayout } from "@/components/dashboard-layout"
 import { AnalyticsCard } from "@/components/analytics/analytics-card"
 import { ComplianceChart } from "@/components/analytics/compliance-chart"
@@ -11,56 +11,100 @@ import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { DatePickerWithRange } from "@/components/ui/date-range-picker"
 import { Download, TrendingUp, AlertTriangle, Clock, Target } from "lucide-react"
-import { mockRepos } from "@/lib/mock-data"
+import { getToken } from "@/lib/auth"
+import { BACKEND_BASE_URL } from "@/lib/config"
+import { AnalyticsSummary } from "@/lib/types"
+import { toast } from "sonner"
+import { Skeleton } from "@/components/ui/skeleton"
 
 export default function AnalyticsPage() {
+  const [analyticsData, setAnalyticsData] = useState<AnalyticsSummary | null>(null)
+  const [loading, setLoading] = useState(true)
   const [selectedRepo, setSelectedRepo] = useState<string>("all")
   const [timeRange, setTimeRange] = useState<string>("30d")
   const [frameworkFilter, setFrameworkFilter] = useState<string>("all")
 
-  const repos = mockRepos
-  const frameworks = ["SOC2", "HIPAA", "ISO27001", "Custom"]
+  const frameworks = ["SOC2", "HIPAA", "ISO27001", "Custom"] // For filter dropdown
 
-  // Calculate analytics data
-  const totalViolations = repos.reduce((acc, repo) => acc + repo.violations.length, 0)
-  const activeViolations = repos.reduce((acc, repo) => acc + repo.violations.filter((v) => !v.resolved).length, 0)
-  const avgScore = Math.round(repos.reduce((acc, repo) => acc + repo.complianceScore, 0) / repos.length)
-  const healthyRepos = repos.filter((r) => r.status === "healthy").length
+  useEffect(() => {
+    const fetchAnalytics = async () => {
+      setLoading(true)
+      try {
+        const token = getToken()
+        const res = await fetch(`${BACKEND_BASE_URL}/api/analytics/summary`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        if (!res.ok) {
+          throw new Error("Failed to fetch analytics data")
+        }
+        const data: AnalyticsSummary = await res.json()
+        setAnalyticsData(data)
+      } catch (error) {
+        console.error(error)
+        toast.error("Could not load analytics summary.")
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchAnalytics()
+  }, [])
 
-  const analyticsCards = [
-    {
-      title: "Average Compliance Score",
-      value: `${avgScore}%`,
-      change: "+2.5%",
-      trend: "up" as const,
-      icon: Target,
-      color: "emerald",
-    },
-    {
-      title: "Active Violations",
-      value: activeViolations.toString(),
-      change: "-12%",
-      trend: "down" as const,
-      icon: AlertTriangle,
-      color: "amber",
-    },
-    {
-      title: "Avg. Resolution Time",
-      value: "2.3 days",
-      change: "-0.5 days",
-      trend: "down" as const,
-      icon: Clock,
-      color: "blue",
-    },
-    {
-      title: "Compliance Trend",
-      value: "+5.2%",
-      change: "This month",
-      trend: "up" as const,
-      icon: TrendingUp,
-      color: "purple",
-    },
-  ]
+  const analyticsCards = analyticsData
+    ? [
+        {
+          title: "Average Compliance Score",
+          value: `${analyticsData.average_compliance_score}%`,
+          change: "+2.5%", // Placeholder
+          trend: "up" as const,
+          icon: Target,
+          color: "emerald",
+        },
+        {
+          title: "Active Violations",
+          value: analyticsData.active_violations.toString(),
+          change: "-12%", // Placeholder
+          trend: "down" as const,
+          icon: AlertTriangle,
+          color: "amber",
+        },
+        {
+          title: "Avg. Resolution Time",
+          value: "3.1 days", // Placeholder
+          change: "-0.5 days", // Placeholder
+          trend: "down" as const,
+          icon: Clock,
+          color: "blue",
+        },
+        {
+          title: "Compliance Trend",
+          value: "+5.2%", // Placeholder
+          change: "This month",
+          trend: "up" as const,
+          icon: TrendingUp,
+          color: "purple",
+        },
+      ]
+    : []
+
+  if (loading) {
+    return (
+      <DashboardLayout>
+        <div className="space-y-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+            {[...Array(4)].map((_, i) => (
+              <Skeleton key={i} className="h-32 rounded-xl" />
+            ))}
+          </div>
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+            <Skeleton className="h-80 rounded-xl" />
+            <Skeleton className="h-80 rounded-xl" />
+          </div>
+        </div>
+      </DashboardLayout>
+    )
+  }
 
   return (
     <DashboardLayout>
@@ -91,11 +135,7 @@ export default function AnalyticsPage() {
               </SelectTrigger>
               <SelectContent className="bg-slate-800 border-white/10">
                 <SelectItem value="all">All Repositories</SelectItem>
-                {repos.map((repo) => (
-                  <SelectItem key={repo.id} value={repo.id}>
-                    {repo.name}
-                  </SelectItem>
-                ))}
+                {/* Repo list can be populated from a future API call */}
               </SelectContent>
             </Select>
 
@@ -137,43 +177,23 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Charts Section */}
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-          <ComplianceChart repos={repos} timeRange={timeRange} />
-          <ViolationsChart repos={repos} />
-        </div>
-
-        {/* Heatmap and Highlights */}
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-          <div className="xl:col-span-2">
-            <ComplianceHeatmap repos={repos} />
+        {analyticsData && (
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+            <ComplianceChart data={analyticsData.compliance_trend} />
+            <ViolationsChart data={analyticsData.top_violation_categories} />
           </div>
-          <HighlightsPanel repos={repos} />
+        )}
+
+        {/* Heatmap and Highlights - To be implemented */}
+        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6">
+            <h3 className="text-xl font-semibold text-white mb-6">Activity Overview</h3>
+            <p className="text-gray-400">Violation heatmap and key highlights will be implemented in a future step.</p>
         </div>
 
         {/* Repo-Level Summary */}
         <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6">
           <h3 className="text-xl font-semibold text-white mb-6">Repository Summary</h3>
-          <div className="space-y-4">
-            {repos.map((repo) => (
-              <div key={repo.id} className="flex items-center justify-between p-4 bg-white/5 rounded-lg">
-                <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-blue-600 rounded-lg flex items-center justify-center">
-                    <span className="text-white font-semibold text-sm">{repo.name.charAt(0).toUpperCase()}</span>
-                  </div>
-                  <div>
-                    <h4 className="text-white font-medium">{repo.name}</h4>
-                    <p className="text-sm text-gray-400">
-                      {repo.violations.filter((v) => !v.resolved).length} active violations
-                    </p>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className="text-2xl font-bold text-white">{repo.complianceScore}%</div>
-                  <div className="text-sm text-emerald-400">+2.1% this month</div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <p className="text-gray-400">Repository-level summary will be implemented in a future step.</p>
         </div>
       </div>
     </DashboardLayout>

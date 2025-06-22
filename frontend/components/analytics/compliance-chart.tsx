@@ -2,26 +2,13 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
-import type { Repo } from "@/lib/types"
+import { AnalyticsComplianceTrendPoint } from "@/lib/types"
 
 interface ComplianceChartProps {
-  repos: Repo[]
-  timeRange: string
+  data: AnalyticsComplianceTrendPoint[]
 }
 
-export function ComplianceChart({ repos, timeRange }: ComplianceChartProps) {
-  // Mock data for the chart
-  const data = [
-    { date: "May 1", score: 76 },
-    { date: "May 8", score: 78 },
-    { date: "May 15", score: 80 },
-    { date: "May 22", score: 81 },
-    { date: "May 29", score: 83 },
-    { date: "Jun 5", score: 85 },
-    { date: "Jun 12", score: 88 },
-    { date: "Jun 17", score: 94 }, // latest
-  ]
-
+export function ComplianceChart({ data }: ComplianceChartProps) {
   return (
     <Card className="bg-white/5 backdrop-blur-sm border-white/10">
       <CardHeader>

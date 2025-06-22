@@ -38,7 +38,7 @@ COPY backend/ .
 # Expose the port the app runs on
 EXPOSE 8080
 
-# Command to run the application
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
+# Command to run the application using the PORT environment variable
+CMD exec uvicorn main:app --host 0.0.0.0 --port ${PORT:-8080}
 
 

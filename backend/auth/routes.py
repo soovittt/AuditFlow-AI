@@ -8,6 +8,7 @@ from db.crud_user import upsert_user
 from db.init import db
 from utils.token import create_jwt_token
 import secrets
+from fastapi import Depends
 
 router = APIRouter(tags=["auth"])
 
@@ -106,3 +107,15 @@ async def refresh_token_endpoint(response: Response, refresh_token: str = Cookie
     # Optionally: rotate refresh token here for extra security
     new_jwt = create_jwt_token(str(user_doc["_id"]))
     return {"token": new_jwt}
+
+@router.post("/auth/logout")
+async def logout(response: Response):
+    response.set_cookie(key="cs_jwt_token", value="", httponly=True, samesite="lax", max_age=-1)
+    return {"message": "Logged out successfully"}
+
+@router.get("/me")
+async def get_me(current_user: dict = Depends(get_current_user)):
+    """
+    Returns the details of the currently authenticated user.
+    """
+    return current_user
