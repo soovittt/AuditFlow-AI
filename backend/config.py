@@ -14,7 +14,7 @@ class Settings:
     MONGODB_DB_NAME: str = os.getenv("MONGODB_DB_NAME", "Cluster0")
 
     # JWT
-    JWT_SECRET_KEY: str = os.getenv("JWT_SECRET_KEY", "cd2d2523ca650fe6ca9c7b82825e394c5fe60c2e49bddc5a074350c9f455fced")
+    JWT_SECRET_KEY: str = os.getenv("JWT_SECRET_KEY", "")
     JWT_ALGORITHM: str = os.getenv("JWT_ALGORITHM", "HS256")
     JWT_EXPIRATION_SECONDS: int = int(os.getenv("JWT_EXPIRATION_SECONDS", "3600"))
 
