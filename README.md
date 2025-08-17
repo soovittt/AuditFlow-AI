@@ -113,7 +113,7 @@ Create api/.env:
 ini
 Copy
 Edit
-DATABASE_URL=postgresql+psycopg2://user:pass@localhost:5432/auditflow
+DATABASE_URL=postgresql database or any
 PINECONE_API_KEY=your_key
 PINECONE_INDEX=auditflow-evidence
 # GitLab/GitHub, Cloud creds, etc.
