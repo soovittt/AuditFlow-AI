@@ -1,72 +1,51 @@
-AuditFlow-AI
+# AuditFlow-AI
 
-AuditFlow-AI is an experimental project exploring how artificial intelligence can streamline compliance, audits, and documentation workflows. Originally developed for a hackathon, the project has grown into a foundation for building open-source audit automation tools that connect with developer workflows and cloud infrastructure.
+[![Status](https://img.shields.io/badge/status-experimental-orange.svg)]()
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)]()
+[![Built with](https://img.shields.io/badge/stack-FastAPI%20%E2%80%A2%20Next.js%20%E2%80%A2%20Postgres%20%E2%80%A2%20Pinecone%20%E2%80%A2%20GCP-6f42c1.svg)]()
+[![CI](https://img.shields.io/badge/ci-GitLab%20Pipelines-success.svg)]()
 
-The mission is simple:
-👉 Make audits effortless.
-👉 Catch security drift automatically.
-👉 Keep teams audit-ready, always.
+**AuditFlow-AI** is an experimental platform to automate compliance evidence collection, detect configuration/security drift, and generate audit-ready documentation from your DevOps footprint. Built initially for a hackathon, it’s evolving toward a community-driven, open-source framework.
 
-🚀 Vision
+> **Mission:** Make audits effortless • Catch drift automatically • Keep teams audit-ready, always.
 
-Audits today are manual, repetitive, and painful. We believe compliance can be reimagined with AI and modern developer tools. AuditFlow-AI is designed to:
+---
 
-Automate evidence collection – Pull relevant compliance artifacts from source control, CI/CD, and cloud providers.
+## Table of Contents
+- [Vision](#vision)
+- [Key Capabilities](#key-capabilities)
+- [Architecture](#architecture)
+- [Tech Stack](#tech-stack)
+- [Quickstart (Local)](#quickstart-local)
+- [Configuration](#configuration)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [Security & Responsible Use](#security--responsible-use)
+- [License](#license)
+- [Acknowledgments](#acknowledgments)
 
-Detect security & configuration drift – Continuously monitor infrastructure for deviations that impact compliance.
+---
 
-Generate audit-ready documentation – Turn raw logs and configs into structured, human-readable reports.
+## Vision
+Audits today are manual and repetitive. AuditFlow-AI reimagines compliance as code + automation:
 
-Integrate with developer workflows – GitLab/GitHub, GCP/AWS, and beyond.
+- **Automated evidence collection** from source control, CI/CD, and cloud accounts.
+- **Continuous drift detection** for infra, policies, and access controls.
+- **Audit-ready packs** that compile artifacts into clean, human-readable reports.
+- **Developer-first**: works with Git-centric flows and modern cloud tooling.
 
-Long term, we aim to make AuditFlow-AI a community-driven open-source framework for compliance automation that any company can adopt and extend.
+Long term, AuditFlow-AI aims to be a **modular open-source framework** you can extend for SOC 2, ISO 27001, HIPAA, and more.
 
-⚡️ Features (Current & Planned)
+---
 
-✅ GitLab integration for metadata and CI/CD pipelines
+## Key Capabilities
+- **Evidence Graph (prototype):** Ingests GitLab metadata, CI runs, IaC state, and cloud configs into a queryable model.
+- **Drift Rules:** Declarative checks that alert on deviations impacting compliance.
+- **Report Generator:** Turns raw logs/configs into structured findings and narratives.
+- **CLI + Web UI (planned):** Dev-first commands plus a lightweight dashboard.
 
-✅ AI-powered summarization of compliance evidence
+> Status: Early prototype; APIs and schemas are subject to change.
 
-✅ Security drift detection from cloud configurations
+---
 
-🛠️ CLI for developer-first workflows
-
-🛠️ Web dashboard for compliance visibility
-
-🛠️ Plugin ecosystem for new providers & standards (SOC 2, ISO 27001, HIPAA, etc.)
-
-🏗️ Tech Stack
-
-Backend: FastAPI / Python
-
-Frontend: Next.js
-
-Infra: Google Cloud
-
-Database: Postgres + Vector DB (Pinecone)
-
-AI: LLM-powered summarization and document generation
-
-🌍 Open Source Future
-
-AuditFlow-AI will be open-sourced to:
-
-Empower startups and enterprises to take compliance into their own hands
-
-Provide transparency in how audit evidence is collected and reported
-
-Enable contributors to build modules for specific industries or frameworks
-
-We see this project as part of a larger movement toward developer-friendly compliance, where audits don’t slow innovation but accelerate trust.
-
-🤝 Contributing (Coming Soon)
-
-We’ll soon publish contribution guidelines and a roadmap. The goal is to grow a community of engineers, security practitioners, and compliance experts building together.
-
-📜 License
-
-Planned to be released under the Apache 2.0 License (subject to finalization).
-
-🙌 Acknowledgments
-
-AuditFlow-AI was first built during a hackathon project, inspired by the challenges of staying audit-ready in fast-moving engineering teams. Thanks to everyone who tested, provided feedback, and shaped the early direction.
+## Architecture
